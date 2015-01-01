@@ -1,6 +1,6 @@
 function testMithril(mock) {
 	m.deps(mock)
-	
+
 	//m
 	test(function() {return m("div").tag === "div"})
 	test(function() {return m(".foo").tag === "div"})
@@ -25,21 +25,21 @@ function testMithril(mock) {
 	//m.module
 	test(function() {
 		mock.performance.$elapse(50)
-		
+
 		var root1 = mock.document.createElement("div")
 		m.module(root1, {
 			controller: function() {this.value = "test1"},
 			view: function(ctrl) {return ctrl.value}
 		})
-		
+
 		var root2 = mock.document.createElement("div")
 		m.module(root2, {
 			controller: function() {this.value = "test2"},
 			view: function(ctrl) {return ctrl.value}
 		})
-		
+
 		mock.requestAnimationFrame.$resolve()
-		
+
 		return root1.childNodes[0].nodeValue === "test1" && root2.childNodes[0].nodeValue === "test2"
 	})
 
@@ -122,7 +122,7 @@ function testMithril(mock) {
 	//m.route
 	test(function() {
 		mock.performance.$elapse(50)
-		
+
 		var root = mock.document.createElement("div")
 		m.route.mode = "search"
 		m.route(root, "/test1", {
@@ -132,7 +132,7 @@ function testMithril(mock) {
 	})
 	test(function() {
 		mock.performance.$elapse(50)
-		
+
 		var root = mock.document.createElement("div")
 		m.route.mode = "pathname"
 		m.route(root, "/test2", {
@@ -142,7 +142,7 @@ function testMithril(mock) {
 	})
 	test(function() {
 		mock.performance.$elapse(50)
-		
+
 		var root = mock.document.createElement("div")
 		m.route.mode = "hash"
 		m.route(root, "/test3", {
@@ -152,7 +152,7 @@ function testMithril(mock) {
 	})
 	test(function() {
 		mock.performance.$elapse(50)
-		
+
 		var root = mock.document.createElement("div")
 		m.route.mode = "search"
 		m.route(root, "/test4/foo", {
@@ -162,9 +162,9 @@ function testMithril(mock) {
 	})
 	test(function() {
 		mock.performance.$elapse(50)
-		
+
 		var module = {controller: function() {}, view: function() {return m.route.param("test")}}
-		
+
 		var root = mock.document.createElement("div")
 		m.route.mode = "search"
 		m.route(root, "/test5/foo", {
@@ -174,7 +174,7 @@ function testMithril(mock) {
 		var paramValueBefore = m.route.param("test")
 		m.route("/")
 		var paramValueAfter = m.route.param("test")
-		
+
 		return mock.location.search == "?/" && paramValueBefore === "foo" && paramValueAfter === undefined
 	})
 
@@ -254,16 +254,16 @@ function testMithril(mock) {
 	//m.startComputation/m.endComputation
 	test(function() {
 		mock.performance.$elapse(50)
-		
+
 		var controller
 		var root = mock.document.createElement("div")
 		m.module(root, {
 			controller: function() {controller = this},
 			view: function(ctrl) {return ctrl.value}
 		})
-		
+
 		mock.performance.$elapse(50)
-		
+
 		m.startComputation()
 		controller.value = "foo"
 		m.endComputation()
